@@ -34,4 +34,15 @@ $("#avatar").on('change',function(){
             $("#hiddenAvatar").val(response[0].avatar);
         }
     });
-})
+});
+
+$.ajax({
+    type: "get",
+    url: "/users",
+    success: function (response) {
+        var html = template('userTpl',{
+            data:response
+        });
+        $("#userBox").html(html);
+    }
+});
