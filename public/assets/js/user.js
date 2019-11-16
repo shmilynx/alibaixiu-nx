@@ -76,4 +76,58 @@ $("#modifyBox").on('submit', '#modifyForm', function () {
         }
     });
     return false;
+});
+
+$("#userBox").on('click', '.delete', function () {
+    if (confirm('是否确认删除？')) {
+        let id = $(this).attr('data-id');
+        $.ajax({
+            type: "delete",
+            url: `/users/${id}`,
+            success: function (response) {
+                location.reload();
+            }
+        });
+    }
+});
+let selectAll = $('#selectAll');
+let deleteMany = $('#deleteMany');
+//点击全选框
+selectAll.on('change', function () {
+    let status = $(this).prop('checked');
+    $("#userBox").find('input').prop('checked', status);
+    if (status) {
+        deleteMany.show();
+    } else {
+        deleteMany.hide();
+    }
+});
+$("#userBox").on('change', '.userStatus', function () {
+    let inputs = $("#userBox").find('input');
+    if (inputs.length == inputs.filter(':checked').length) {
+        selectAll.prop('checked', true);
+    } else {
+        selectAll.prop('checked', false);
+    };
+    if (inputs.filter(':checked').length > 0) {
+        deleteMany.show();
+    } else {
+        deleteMany.hide();
+    }
+});
+deleteMany.on('click', function () {
+    let ids = [];
+    let checkedUser = $("#userBox").find('input').filter(':checked');
+    checkedUser.each(function (index, element) {
+        ids.push($(element).attr('data-id'));
+    });
+    if (confirm('是否确定批量删除')) {
+        $.ajax({
+            type: "delete",
+            url: "/users/" + ids.join('-'),
+            success: function (response) {
+                location.reload();
+            }
+        });
+    }
 })
