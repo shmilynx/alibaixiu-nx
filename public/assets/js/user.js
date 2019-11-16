@@ -119,7 +119,7 @@ deleteMany.on('click', function () {
     let ids = [];
     let checkedUser = $("#userBox").find('input').filter(':checked');
     checkedUser.each(function (index, element) {
-        ids.push($(element).attr('data-id'));
+        ids.push($(element).attr('data-id'));//将原生DOM元素转化成jQuery元素对象 
     });
     if (confirm('是否确定批量删除')) {
         $.ajax({
