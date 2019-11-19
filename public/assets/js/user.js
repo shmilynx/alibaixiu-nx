@@ -48,7 +48,7 @@ $.ajax({
 	type: 'get',
 	url: '/users',
 	success: function (response) {
-		console.log(response)
+		// console.log(response)
 		// 使用模板引擎将数据和HTML字符串进行拼接
 		var html = template('userTpl', { data: response });
 		// 将拼接好的字符串显示在页面中
@@ -65,7 +65,7 @@ $('#userBox').on('click', '.edit', function () {
 		type: 'get',
 		url : '/users/' + id,
 		success: function (response) {
-			console.log(response)
+			// console.log(response)
 			var html = template('modifyTpl', response);
 			$('#modifyBox').html(html);
 		}
